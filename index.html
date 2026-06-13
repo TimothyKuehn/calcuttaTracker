@@ -53,6 +53,7 @@
             border-bottom: 3px solid var(--primary);
             padding-bottom: 15px;
             margin-bottom: 20px;
+            gap: 15px;
         }
 
         h1 { margin: 0; color: var(--primary); font-size: 2.2rem; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
@@ -60,6 +61,7 @@
         .btn-toggle {
             background: var(--primary); color: #0b221a; border: none;
             padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: 700;
+            white-space: nowrap;
         }
 
         .grid-4 {
@@ -78,7 +80,19 @@
 
         .countdown-time { font-size: 1.6rem; font-weight: 800; color: #ffffff; text-shadow: 0 0 10px rgba(244, 206, 20, 0.4); }
 
-        .tabs { display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 1px solid var(--border-color); overflow-x: auto; }
+        .tabs { 
+            display: flex; 
+            gap: 10px; 
+            margin-bottom: 25px; 
+            border-bottom: 1px solid var(--border-color); 
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+        
         .tab-btn {
             padding: 12px 24px; border: none; background: none; font-size: 1.1rem;
             font-weight: 700; color: var(--text-muted); cursor: pointer; border-bottom: 4px solid transparent; white-space: nowrap;
@@ -103,19 +117,99 @@
         .roi-positive { color: var(--success); font-weight: bold; }
         .roi-negative { color: #fc8181; }
 
-        .badge { display: inline-block; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; }
+        .status-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: nowrap;
+        }
+
+        .badge { display: inline-block; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; line-height: 1; }
         .badge-live { background-color: var(--live-bg); color: var(--live-text); animation: pulse 1.5s infinite; }
         .badge-final { background-color: rgba(255,255,255,0.1); color: var(--text-muted); }
         .badge-upcoming { background-color: rgba(244, 206, 20, 0.1); color: var(--primary); border: 1px solid var(--primary); }
-        .score-box { font-size: 1.2rem; font-weight: 900; background: rgba(0,0,0,0.4); padding: 4px 10px; border-radius: 6px; display: inline-block; margin-top: 5px; color: #fff; border: 1px solid var(--border-color); }
+        .score-box { font-size: 1.1rem; font-weight: 900; background: rgba(0,0,0,0.4); padding: 4px 10px; border-radius: 6px; display: inline-block; color: #fff; border: 1px solid var(--border-color); line-height: 1; }
 
-        .group-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px; }
+        .group-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; }
         .group-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px; }
         .group-card h4 { margin: 0 0 10px 0; color: var(--primary); border-bottom: 1px solid var(--border-color); padding-bottom: 5px; }
         .group-table { width: 100%; box-shadow: none; margin-bottom: 0; border-radius: 0; }
         .group-table th, .group-table td { padding: 6px 8px; font-size: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
+        .coming-home-card {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+        .coming-home-title {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        .coming-home-verdict {
+            font-size: 7rem;
+            font-weight: 900;
+            color: #fc8181;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            margin: 0;
+            text-shadow: 0 4px 20px rgba(252, 129, 129, 0.2);
+        }
+
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            header { flex-direction: column; align-items: flex-start; gap: 12px; }
+            h1 { font-size: 1.6rem; }
+            .grid-4 { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .card { padding: 14px; }
+            .countdown-time { font-size: 1.3rem; }
+            .tab-btn { padding: 10px 14px; font-size: 0.95rem; }
+
+            #matches table, #results table, #standings table,
+            #matches thead, #results thead, #standings thead,
+            #matches tbody, #results tbody, #standings tbody,
+            #matches th, #results th, #standings th,
+            #matches td, #results td, #standings td,
+            #matches tr, #results tr, #standings tr {
+                display: block;
+            }
+            #matches thead tr, #results thead tr, #standings tr:first-child:has(th) {
+                position: absolute; top: -9999px; left: -9999px;
+            }
+            #matches tr, #results tr, #standings tr {
+                margin-bottom: 15px; border: 1px solid var(--border-color);
+                border-radius: 10px; background: var(--card-bg); overflow: hidden;
+            }
+            #matches td, #results td, #standings td {
+                border: none; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                position: relative; padding-left: 45% !important; text-align: right !important;
+                font-size: 0.9rem; min-height: 24px;
+            }
+            #matches td::before, #results td::before, #standings td::before {
+                position: absolute; top: 50%; left: 15px; transform: translateY(-50%);
+                width: 40%; padding-right: 10px; white-space: nowrap; text-align: left;
+                font-weight: 700; color: var(--primary); font-size: 0.75rem; text-transform: uppercase;
+                content: attr(data-label);
+            }
+            td br { display: none; }
+            .status-container { justify-content: flex-end; width: 100%; }
+
+            .group-table tr { display: table-row; border: none; background: transparent; box-shadow: none; }
+            .group-table td, .group-table th { display: table-cell; padding: 8px 6px !important; text-align: left !important; }
+            .group-table td::before { display: none; }
+            
+            .coming-home-verdict { font-size: 5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .grid-4 { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -123,7 +217,7 @@
 <div class="container">
     <header>
         <div>
-            <h1>🏆 WORLD CUP CALCUTTA TRACKER</h1>
+            <h1>🏆 WORLD CUP CALCUTTA</h1>
             <div id="currentTime" style="color: var(--text-muted); font-size: 0.9rem; font-family: monospace;"></div>
         </div>
         <button class="btn-toggle" onclick="toggleTheme()">🌓 THEME</button>
@@ -131,7 +225,7 @@
 
     <div class="grid-4">
         <div class="card">
-            <h3>⏰ NEXT KICKOFF COUNTDOWN</h3>
+            <h3>⏰ NEXT KICKOFF</h3>
             <div id="countdownTarget" style="font-weight: 700; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 4px;">Scanning...</div>
             <div id="countdownDisplay" class="countdown-time">--:--:--</div>
         </div>
@@ -155,6 +249,7 @@
         <button class="tab-btn" onclick="switchTab('groups')">📊 Group Standings</button>
         <button class="tab-btn" onclick="switchTab('results')">🏆 Payout Logs</button>
         <button class="tab-btn" onclick="switchTab('standings')">👥 Owners Ledger</button>
+        <button class="tab-btn" onclick="switchTab('cominghome')">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Coming Home?</button>
     </div>
 
     <div id="matches" class="tab-content active">
@@ -204,10 +299,16 @@
             <tbody id="ownersBody"><tr><td colspan="5" style="text-align:center;">Calculating ledger...</td></tr></tbody>
         </table>
     </div>
+
+    <div id="cominghome" class="tab-content">
+        <div class="coming-home-card">
+            <div class="coming-home-title">Is it coming home?</div>
+            <p class="coming-home-verdict">No</p>
+        </div>
+    </div>
 </div>
 
 <script>
-    // REPLACE WITH YOUR ACTUAL GOOGLE SHEETS PUBLISHED CSV LINKS
     const fixturesCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQjEt-UxAanfZP_2ad_M5WD3RIpdCukW-ZQsQaelE1Tj6MI_7-5JIc1ot2Ysc5mrDx20CVYKZj8OofG/pub?gid=1481656697&single=true&output=csv';
     const teamsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRNLtu6hukm3jjTXSz5QtY6-BchYwBPARwmN4vr2iTQj8zPRtQXGf2CSViEKpkgDgQqgspRP4njzlw5/pub?output=csv';
 
@@ -218,7 +319,6 @@
         'semifinal winner': 0.0500, 'third place winner': 0.0200, 'world cup winner': 0.1020
     };
 
-    // Standardized ISO Flag Mapping API dictionary values
     const flagCodes = {
         'mexico':'mx','south africa':'za','south korea':'kr','czechia':'cz','czech republic':'cz','canada':'ca',
         'bosnia and herzegovina':'ba','usa':'us','united states':'us','paraguay':'py','qatar':'qa','haiti':'ht',
@@ -265,8 +365,52 @@
         return r.map(columns => columns.map(val => val.trim()));
     }
 
+    /* FIXES TIME ZONE DEVIATIONS FROM TEXT SPREADSHEETS EXPLICITLY TO EASTERN TIME */
+    function createLocalDateFromET(dateStr, timeStr) {
+        // Formats cleanly into an ISO representation tagged to Eastern Time (-05:00 or -04:00 baseline)
+        // To support historical, standard, and daylight shifts perfectly, we parse parts explicitly.
+        const dParts = dateStr.split('-');
+        if(dParts.length !== 3) return new Date(dateStr); 
+        
+        let cleanedTime = timeStr.replace(/ET|EST|EDT/gi, '').trim();
+        if(!cleanedTime.includes(':')) cleanedTime = "00:00";
+        
+        // Formulates a temporal standard string targeting America/New_York
+        const targetString = `${dateStr}T${cleanedTime}:00`;
+        
+        // Fallback robust lookup via Intl conversions or direct structural offset
+        const dateSample = new Date(targetString + '-04:00'); // Initial test guess
+        
+        // Perfect correction matrix leveraging local browser tools
+        try {
+            const formatter = new Intl.DateTimeFormat('en-US', {
+                timeZone: 'America/New_York',
+                year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+            });
+            
+            // Adjust calculations checking structural variance
+            let nativeDate = new Date(`${dParts[0]}/${dParts[1]}/${dParts[2]} ${cleanedTime} GMT-0500`);
+            let checkParts = formatter.formatToParts(nativeDate);
+            let checkHour = checkParts.find(p => p.type === 'hour').value;
+            let targetHour = cleanedTime.split(':')[0];
+            
+            if (parseInt(checkHour) !== parseInt(targetHour)) {
+                // If daylight savings is active in America/New_York, adjust native offset anchor
+                nativeDate = new Date(`${dParts[0]}/${dParts[1]}/${dParts[2]} ${cleanedTime} GMT-0400`);
+            }
+            return nativeDate;
+        } catch(err) {
+            return dateSample; // Safe fallback assignment
+        }
+    }
+
     async function loadDashboard() {
         try {
+            // Setup local browser system clock visual
+            const options = { timeZoneName: 'short', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            document.getElementById('currentTime').innerText = `Your Local Time: ${new Date().toLocaleTimeString([], options)}`;
+
             const teamsResponse = await fetch(teamsCsvUrl);
             const teamsText = await teamsResponse.text();
             masterTeamsRegistry = {};
@@ -277,9 +421,11 @@
 
             const response = await fetch(fixturesCsvUrl);
             globalMatches = parseCSV(await response.text()).slice(1).filter(r => r.length >= 9 && r[7]).map(row => {
-                const dateStr = row[7]; const timeStr = row[8] || "00:00";
-                let matchDateTime = new Date(`${dateStr}T${timeStr.replace(/ET|EST|EDT/gi, '').trim()}`);
-                if (isNaN(matchDateTime.getTime())) matchDateTime = new Date(dateStr);
+                const dateStr = row[7]; 
+                const timeStr = row[8] || "00:00";
+                
+                // Parse the Eastern Time sheet fields directly into your device's explicit time coordinate
+                let matchDateTime = createLocalDateFromET(dateStr, timeStr);
 
                 let matchWinner = 'None', isComplete = false;
                 const scoreStr = row[18] || ''; const isLiveFlag = (row[17] && row[17].toLowerCase() === 'true');
@@ -290,7 +436,6 @@
                     else if (parseInt(scores[1]) > parseInt(scores[0])) matchWinner = row[3];
                 }
 
-                // Shadowing tracking
                 if (isComplete && !row[1].toLowerCase().includes('group stage')) {
                     const loser = (matchWinner === row[2]) ? row[3] : row[2];
                     if(loser) eliminatedTeams.add(loser.toLowerCase().trim());
@@ -299,9 +444,13 @@
                 const homeOwner = masterTeamsRegistry[row[2].toLowerCase()] ? masterTeamsRegistry[row[2].toLowerCase()].owner : (row[15] || 'Unowned');
                 const awayOwner = masterTeamsRegistry[row[3].toLowerCase()] ? masterTeamsRegistry[row[3].toLowerCase()].owner : (row[16] || 'Unowned');
 
+                // Generate localized view strings for display on user interface
+                const localDateDisplay = matchDateTime.toLocaleDateString([], { month: 'short', day: 'numeric', weekday: 'short' });
+                const localTimeDisplay = matchDateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
                 return {
                     group: row[0], stage: row[1], home: row[2], away: row[3], stadium: row[4], city: row[5], country: row[6],
-                    dateStr: dateStr, timeStr: timeStr, homeOwner: homeOwner, awayOwner: awayOwner, isLive: isLiveFlag,
+                    dateStr: localDateDisplay, timeStr: localTimeDisplay, homeOwner: homeOwner, awayOwner: awayOwner, isLive: isLiveFlag,
                     isComplete: isComplete, score: scoreStr, winner: matchWinner, dateObj: matchDateTime
                 };
             });
@@ -319,23 +468,32 @@
     function renderSchedule() {
         let html = '';
         globalMatches.forEach(m => {
-            let status = '<span class="badge badge-upcoming">Upcoming</span>';
-            if (m.isLive) status = '<span class="badge badge-live">● LIVE</span><br><span class="score-box">' + (m.score || '0-0') + '</span>';
-            else if (m.isComplete) status = '<span class="badge badge-final">Final</span><br><span class="score-box">' + m.score + '</span>';
+            let status = '<div class="status-container"><span class="badge badge-upcoming">Upcoming</span></div>';
+            if (m.isLive) {
+                status = `<div class="status-container">
+                    <span class="badge badge-live">● LIVE</span> 
+                    <span class="score-box">${m.score || '0-0'}</span>
+                </div>`;
+            } else if (m.isComplete) {
+                status = `<div class="status-container">
+                    <span class="badge badge-final">Final</span> 
+                    <span class="score-box">${m.score}</span>
+                </div>`;
+            }
 
             const homeElim = eliminatedTeams.has(m.home.toLowerCase().trim()) ? 'eliminated' : '';
             const awayElim = eliminatedTeams.has(m.away.toLowerCase().trim()) ? 'eliminated' : '';
 
             html += `<tr>
-                <td><strong>${m.dateStr}</strong><br><small style="color:var(--text-muted);">${m.timeStr}</small></td>
-                <td><strong>${m.stage}</strong><br><small style="color:var(--text-muted);">${m.group ? 'Group ' + m.group : ''}</small></td>
-                <td>
-                    <span class="${homeElim}">${getFlagHtml(m.home)}<strong>${m.home}</strong></span> <small style="color:var(--text-muted);">(${m.homeOwner})</small><br>
-                    <span style="color:var(--text-muted); font-size:0.8rem">vs</span><br>
+                <td data-label="Date & Time"><strong>${m.dateStr}</strong> <br><small style="color:var(--text-muted); font-weight: bold;">${m.timeStr}</small></td>
+                <td data-label="Stage"><strong>${m.stage}</strong> <small style="color:var(--text-muted);">${m.group ? 'Group ' + m.group : ''}</small></td>
+                <td data-label="Matchup">
+                    <span class="${homeElim}">${getFlagHtml(m.home)}<strong>${m.home}</strong></span> <small style="color:var(--text-muted);">(${m.homeOwner})</small>
+                    <span style="color:var(--text-muted); font-size:0.8rem; margin: 0 4px;">vs</span>
                     <span class="${awayElim}">${getFlagHtml(m.away)}<strong>${m.away}</strong></span> <small style="color:var(--text-muted);">(${m.awayOwner})</small>
                 </td>
-                <td>${status}</td>
-                <td>${m.stadium}<br><small style="color:var(--text-muted);">${m.city}, ${m.country}</small></td>
+                <td data-label="Status / Score">${status}</td>
+                <td data-label="Venue">${m.stadium} <small style="color:var(--text-muted);">${m.city}</small></td>
             </tr>`;
         });
         document.getElementById('matchesBody').innerHTML = html;
@@ -353,7 +511,6 @@
         globalMatches.forEach(m => {
             let payoutValue = 0; const stageLower = m.stage.toLowerCase(); const isGroupStage = stageLower.includes('group stage');
 
-            // Build Live Simulator Metrics Array Groupings
             if (isGroupStage && m.group) {
                 if (!groupStats[m.group]) groupStats[m.group] = {};
                 [m.home, m.away].forEach(t => {
@@ -379,10 +536,10 @@
                     if(masterTeamsRegistry[winKey]) masterTeamsRegistry[winKey].returns += payoutValue;
                 }
                 resultsHtml += `<tr>
-                    <td><strong>${m.home} vs ${m.away}</strong><br><small style="color:var(--text-muted);">${m.stage}</small></td>
-                    <td><span style="color:var(--success);font-weight:600;">🏆 ${m.winner}</span></td>
-                    <td><span class="score-box">${m.score}</span></td>
-                    <td><strong>$${payoutValue.toFixed(2)}</strong></td>
+                    <td data-label="Details"><strong>${m.home} vs ${m.away}</strong> <small style="color:var(--text-muted);">${m.stage}</small></td>
+                    <td data-label="Winner"><span style="color:var(--success);font-weight:600;">🏆 ${m.winner}</span></td>
+                    <td data-label="Score"><span class="score-box">${m.score}</span></td>
+                    <td data-label="Payout"><strong>$${payoutValue.toFixed(2)}</strong></td>
                 </tr>`;
             }
 
@@ -392,7 +549,6 @@
             }
         });
 
-        // Apply specialized bonus rows (Group Winner/Runner-up concluded triggers)
         globalMatches.forEach(m => {
             const st = m.stage.toLowerCase();
             if (m.isComplete && (st.includes('group stage winner') || st.includes('group stage runner-up'))) {
@@ -406,7 +562,6 @@
         document.getElementById('resultsBody').innerHTML = resultsHtml || `<tr><td colspan="4" style="text-align:center;">Waiting for results...</td></tr>`;
         renderGroupsDOM(groupStats);
 
-        // Generate Owners Ledger and ROI progress bars
         let ownersHtml = '', highestRoiName = "N/A", maxRoi = -Infinity, bestAssetStr = "N/A", topRatio = 0;
         
         Object.values(ownersData).forEach(o => {
@@ -418,11 +573,11 @@
             if (o.payouts > 0 && roiPct > maxRoi && o.costs > 0) { maxRoi = roiPct; highestRoiName = `${o.name} (${roiPct.toFixed(1)}%)`; }
 
             ownersHtml += `<tr>
-                <td><strong>${o.name}</strong></td>
-                <td><small>${Array.from(o.teams).join(', ')}</small></td>
-                <td>$${o.costs.toFixed(2)}</td>
-                <td>$${o.payouts.toFixed(2)}</td>
-                <td>
+                <td data-label="Pool Owner"><strong>${o.name}</strong></td>
+                <td data-label="Teams Owned"><small>${Array.from(o.teams).join(', ')}</small></td>
+                <td data-label="Total Costs">$${o.costs.toFixed(2)}</td>
+                <td data-label="Gross Won">$${o.payouts.toFixed(2)}</td>
+                <td data-label="Net / Total ROI">
                     <span class="${net >= 0 ? 'roi-positive' : 'roi-negative'}">$${net.toFixed(2)} (${roiPct.toFixed(1)}%)</span>
                     <div class="roi-bar-container"><div class="roi-bar" style="width: ${barPct}%; background: ${barColor};"></div></div>
                 </td>
@@ -431,7 +586,6 @@
         document.getElementById('ownersBody').innerHTML = ownersHtml;
         document.getElementById('topWinner').innerHTML = highestRoiName !== "N/A" ? `<strong>${highestRoiName}</strong>` : `<span>None yet</span>`;
 
-        // Value Card Analytics mapping
         Object.values(masterTeamsRegistry).forEach(t => {
             if(t.price > 0 && t.returns > 0) {
                 let ratio = t.returns / t.price;
@@ -448,7 +602,18 @@
             let html = `<div class="group-card"><h4>GROUP ${gName}</h4><table class="group-table"><thead><tr><th>Team</th><th>P</th><th>GD</th><th>PTS</th></tr></thead><tbody>`;
             sortedTeams.forEach(t => {
                 const isElim = eliminatedTeams.has(t.name.toLowerCase().trim()) ? 'class="eliminated"' : '';
-                html += `<tr ${isElim}><td>${getFlagHtml(t.name)} ${t.name}</td><td>${t.p}</td><td>${t.gd >= 0 ? '+' + t.gd : t.gd}</td><td><strong>${t.pts}</strong></td></tr>`;
+                const registryLookup = masterTeamsRegistry[t.name.toLowerCase().trim()];
+                const ownerLabel = (registryLookup && registryLookup.owner) ? registryLookup.owner : 'Unowned';
+
+                html += `<tr ${isElim}>
+                    <td>
+                        ${getFlagHtml(t.name)} <strong>${t.name}</strong><br>
+                        <small style="color: var(--text-muted); font-size: 0.75rem;">(${ownerLabel})</small>
+                    </td>
+                    <td>${t.p}</td>
+                    <td>${t.gd >= 0 ? '+' + t.gd : t.gd}</td>
+                    <td><strong>${t.pts}</strong></td>
+                </tr>`;
             });
             html += '</tbody></table></div>'; container.innerHTML += html;
         });
